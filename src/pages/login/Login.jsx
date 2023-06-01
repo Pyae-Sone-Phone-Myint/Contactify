@@ -5,7 +5,8 @@ import { PasswordInput, TextInput } from "@mantine/core";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../redux/feature/authSlice";
 import { useForm } from "@mantine/form";
-import { BiUser, BiKey } from "react-icons/bi";
+import {  BiKey } from "react-icons/bi";
+import {  GoMail } from "react-icons/go";
 
 const Login = () => {
 	const [failed, setFailed] = useState("");
@@ -17,8 +18,8 @@ const Login = () => {
 
 		validate: {
 			email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-			password: (value, values) =>
-				value == values ? null : "Your password is wrong",
+			password: (value) =>
+				value.length > 8 ? "Password must be 8 characters" : null,
 		},
 	});
 
@@ -52,21 +53,23 @@ const Login = () => {
 					<h2 className=" text-gray-800 font-medium text-2x">Login</h2>
 
 					<div className=" flex gap-3 items-center">
-						<BiUser className=" text-xl mr-3" />
+						<GoMail className=" text-xl mr-3" />
 
 						<TextInput
+						required
 							className=" w-full"
 							withAsterisk
 							{...form.getInputProps("email")}
 							placeholder="Enter your email..."
 						/>
 					</div>
-					<p className="  text-red-600 text-sm m-0">
-						{failed?.length !== 0 ? failed : null}
-					</p>
+					{failed?.length != 0 ? (
+						<p className=" text-red-600 text-sm m-0">{failed}</p>
+					) : null}
 					<div className=" flex gap-3 items-center">
 						<BiKey className=" text-xl mr-3" />
 						<PasswordInput
+						required
 							className=" w-full"
 							withAsterisk
 							{...form.getInputProps("password")}

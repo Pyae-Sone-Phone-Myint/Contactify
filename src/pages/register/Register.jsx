@@ -4,7 +4,9 @@ import { useNavigate } from "react-router";
 import { PasswordInput, TextInput } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { useForm } from "@mantine/form";
-import { BiUser } from "react-icons/bi";
+import { BiKey, BiUser } from "react-icons/bi";
+import { GoMail } from "react-icons/go";
+import { BsShieldLock } from "react-icons/bs";
 
 const Register = () => {
 	const [failed, setFailed] = useState("");
@@ -52,30 +54,49 @@ const Register = () => {
 				>
 					<h2 className=" text-gray-800 font-medium text-2x">Register</h2>
 
-					<div className="">
+					<div className=" flex gap-3 items-center">
 						<BiUser className=" text-xl mr-3" />
-						
+
 						<TextInput
+						required
 							withAsterisk
-							icon={<BiUser />}
+							className=" w-full"
 							{...form.getInputProps("name")}
 							placeholder="Enter your name..."
 						/>
 					</div>
 
-					<TextInput
-						withAsterisk
-						{...form.getInputProps("email")}
-						placeholder="Enter your email..."
-					/>
-					<PasswordInput
-						{...form.getInputProps("password")}
-						placeholder="Enter your password ..."
-					/>
-					<PasswordInput
-						{...form.getInputProps("password_confirmation")}
-						placeholder="Retype your password ..."
-					/>
+					<div className=" flex gap-3 items-center">
+						<GoMail className=" text-xl mr-3" />
+
+						<TextInput
+						required
+							withAsterisk
+							className=" w-full"
+							{...form.getInputProps("email")}
+							placeholder="Enter your email..."
+						/>
+					</div>
+					<div className=" flex gap-3 items-center">
+						<BiKey className=" text-xl mr-3" />
+
+						<PasswordInput
+						required
+							className=" w-full"
+							{...form.getInputProps("password")}
+							placeholder="Enter your password ..."
+						/>
+					</div>
+					<div className="flex gap-3 items-center">
+						<BsShieldLock className=" text-xl mr-3" />
+
+						<PasswordInput
+						required
+							className=" w-full"
+							{...form.getInputProps("password_confirmation")}
+							placeholder="Retype your password ..."
+						/>
+					</div>
 					<div className=" flex gap-3">
 						<p className=" select-none text-gray-400">
 							Already have an account
@@ -85,7 +106,7 @@ const Register = () => {
 						</Link>
 					</div>
 
-					{failed?.length !== 0 ? (
+					{failed?.length != 0 ? (
 						<p className=" text-red-600 text-sm m-0">{failed}</p>
 					) : null}
 					<button
