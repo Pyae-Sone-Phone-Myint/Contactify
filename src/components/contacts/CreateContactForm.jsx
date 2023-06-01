@@ -5,9 +5,11 @@ import { useCreateContactMutation } from "../../redux/api/contactApi";
 import { BsFillPersonFill, BsTelephoneFill } from "react-icons/bs";
 import { FaHome } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 const CreateContactForm = () => {
-  const token= "5131|zXyFJyY0LjcQJxbWOFEsOUT6qAOOX8QicPMDVMfh";
+  const token = "20|fiVlk0nYuEA3Jzt8HULJHucBHNzW4hvWzMopuWSF";
   const [createContact] = useCreateContactMutation();
+  const nav = useNavigate();
   const form = useForm({
     initialValues: {
       name: "",
@@ -28,12 +30,12 @@ const CreateContactForm = () => {
   return (
     <div className=" max-w-[500px]">
       <form
-         onSubmit={form.onSubmit(async (values) => {
+        onSubmit={form.onSubmit(async (values) => {
           console.log(values);
           const data = await createContact({ data: values, token });
           console.log(data);
           form.reset();
-          // nav('/')
+          nav("/");
         })}
         className=" flex-col flex gap-8"
       >

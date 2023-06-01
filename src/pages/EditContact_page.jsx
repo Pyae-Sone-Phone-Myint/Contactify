@@ -1,15 +1,16 @@
 import React from "react";
-import CreateContactForm from "../components/contacts/CreateContactForm";
-import { useNavigate } from "react-router-dom";
+import EditContactForm from "../components/contacts/EditContactForm";
 import { TbArrowBackUp } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
-const CreateContact_page = () => {
+const EditContact_page = () => {
   const nav = useNavigate();
   const back = () => {
     nav(-1);
   };
   return (
     <div className="lg:w-[50vw] mx-auto  relative w-[90%]">
+      
       <button onClick={() => back()}>
         <p className=" text-xl hidden md:block absolute md:top-[5%] left-[-15%] hover:rounded-full hover:bg-gray-200 px-3">
           <TbArrowBackUp />
@@ -21,11 +22,11 @@ const CreateContact_page = () => {
         </p>
       </button>
       <h1 className=" text-color font-semibold text-xl mb-5">
-        Enter Contact Details
+        Modify Contact Information
       </h1>
-      <CreateContactForm />
+      <EditContactForm />
     </div>
   );
 };
 
-export default CreateContact_page;
+export default EditContact_page;

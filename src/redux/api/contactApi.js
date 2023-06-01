@@ -6,7 +6,7 @@ export const contactApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://contact-app.mmsdev.site/api/v1",
   }),
-  tagTypes:"contacts",
+  tagTypes: "contacts",
   endpoints: (builder) => ({
     getAllContacts: builder.query({
       query: (token) => ({
@@ -14,7 +14,7 @@ export const contactApi = createApi({
         method: "GET",
         headers: { authorization: `Bearer ${token}` },
       }),
-      providesTags:["contacts"]
+      providesTags: ["contacts"],
     }),
     createContact: builder.mutation({
       query: ({ data, token }) => ({
@@ -23,11 +23,42 @@ export const contactApi = createApi({
         headers: { authorization: `Bearer ${token}` },
         body: data,
       }),
-      invalidatesTags: ["contact"],
+      invalidatesTags: ["contacts"],
+    }),
+    deleteContact: builder.mutation({
+      query: ({ id, token }) => ({
+        url: `/contact/${id}`,
+        method: "DELETE",
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      invalidatesTags: ["contacts"],
+    }),
+    getSingleContact: builder.query({
+      query: ({ id, token }) => ({
+        url: `/contact/${id}`,
+        method: "GET",
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      providesTags: ["contacts"],
+    }),
+    updateContact: builder.mutation({
+      query: ({ data, token, id }) => ({
+        url: `/contact/${id}`,
+        method: "PUT",
+        headers: { authorization: `Bearer ${token}` },
+        body: data,
+      }),
+      invalidatesTags: ["contacts"],
     }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllContactsQuery, useCreateContactMutation } = contactApi;
+export const {
+  useGetAllContactsQuery,
+  useCreateContactMutation,
+  useDeleteContactMutation,
+  useGetSingleContactQuery,
+  useUpdateContactMutation,
+} = contactApi;
