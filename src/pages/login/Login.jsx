@@ -7,6 +7,7 @@ import { addUser } from "../../redux/feature/authSlice";
 import { useForm } from "@mantine/form";
 import {  BiKey } from "react-icons/bi";
 import {  GoMail } from "react-icons/go";
+import { SyncLoader } from "react-spinners";
 
 const Login = () => {
 	const [failed, setFailed] = useState("");
@@ -23,21 +24,21 @@ const Login = () => {
 		},
 	});
 
-	const [login] = useLoginMutation();
+	const [login,{isLoading}] = useLoginMutation();
 	const nav = useNavigate();
 
 	const dispatch = useDispatch();
 
 	return (
 		<div className="flex  mx-auto items-center justify-center">
-			<div className="  ">
+			<div className="  w-1/2">
 				<img
 					src="https://img.freepik.com/free-vector/sign-page-abstract-concept-illustration_335657-3875.jpg?size=626&ext=jpg"
 					className="  hidden md:block w-auto"
 					alt=""
 				/>
 			</div>
-			<div className=" flex justify-center items-center h-screen w-full lg:w-1/2">
+			<div className=" flex justify-center items-center h-screen w-full md:w-1/2">
 				<form
 					onSubmit={form.onSubmit(async (values) => {
 						const { data, error } = await login(values);
@@ -48,8 +49,10 @@ const Login = () => {
 							setFailed(error?.data?.message);
 						}
 					})}
-					className=" flex flex-col gap-6 w-96 p-7 shadow-md"
+					className=" flex flex-col gap-5 w-96 p-7 shadow-md h-[80%]"
 				>
+					<h1 className=" text-3xl font-bold text-center">Contactify</h1>
+					<h3 className=" text-xl font-medium text-center">Hello Again</h3>
 					<h2 className=" text-gray-800 font-medium text-2x">Login</h2>
 
 					<div className=" flex gap-3 items-center">
@@ -78,10 +81,11 @@ const Login = () => {
 					</div>
 
 					<button
+						disabled={isLoading&&true}
 						type="submit"
-						className=" bg-purple-600 text-white px-4 py-1 rounded"
+						className=" btn-color text-color  px-4 py-2 tracking-wider shadow-sm hover:bg-orange-700 duration-300 rounded"
 					>
-						Login
+						{isLoading ? (<SyncLoader color="#d6b336" />): "Login"}
 					</button>
 				</form>
 			</div>

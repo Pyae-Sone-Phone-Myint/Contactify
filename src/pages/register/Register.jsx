@@ -7,10 +7,11 @@ import { useForm } from "@mantine/form";
 import { BiKey, BiUser } from "react-icons/bi";
 import { GoMail } from "react-icons/go";
 import { BsShieldLock } from "react-icons/bs";
+import { SyncLoader } from "react-spinners";
 
 const Register = () => {
 	const [failed, setFailed] = useState("");
-	const [register] = useRegisterMutation();
+	const [register,{isLoading}] = useRegisterMutation();
 	const nav = useNavigate();
 
 	const form = useForm({
@@ -110,10 +111,12 @@ const Register = () => {
 						<p className=" text-red-600 text-sm m-0">{failed}</p>
 					) : null}
 					<button
+						disabled={isLoading&&true}
+
 						type="submit"
-						className=" bg-purple-600 text-white px-4 py-2 rounded"
+						className=" btn-color text-color tracking-wider shadow-sm hover:bg-orange-700 duration-300 px-4 py-2 rounded"
 					>
-						Sign up
+						{isLoading ? (<SyncLoader color="#d6b336" />): "Sign up"}
 					</button>
 				</form>
 			</div>
