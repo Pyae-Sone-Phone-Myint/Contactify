@@ -23,7 +23,7 @@ const User_detail = () => {
             <p className=" text-gray-700 text-sm mb-3 px-5">
               Some info may be visible to other people
             </p>
-            <div className="flex justify-between border-b py-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition">
+            <div className="flex justify-between border-b py-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition">
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">
                 <h4 className="text-xs text-50 font-bold md:w-3/12">
                   Profile picture
@@ -34,14 +34,14 @@ const User_detail = () => {
               </div>
               <FaUserCircle size={'3rem'}/>
             </div>
-            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition">
+            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition">
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">
                 <h4 className="text-xs text-50 font-bold md:w-3/12">Name</h4>
                 <p className="text-xs text-50 md:text-sm w-9/12">{data?.success && data.user.name}</p>
               </div>
               <MdArrowForwardIos className="text-lg md:text-2xl" />
             </div>
-            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition">
+            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition">
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">
                 <h4 className="text-xs text-50 font-bold md:w-3/12">
                   Birthday
@@ -50,7 +50,7 @@ const User_detail = () => {
               </div>
               <MdArrowForwardIos className="text-lg md:text-2xl" />
             </div>
-            <div className="flex justify-between items-center h-20 px-5 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition">
+            <div className="flex justify-between items-center h-20 px-5 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition">
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">
                 <h4 className="text-xs text-50 font-bold md:w-3/12">Gender</h4>
                 <p className="text-xs text-50 md:text-sm w-9/12">Not set</p>
@@ -63,14 +63,14 @@ const User_detail = () => {
           <div className=" border border-gray-500 rounded-lg mt-5">
             <h3 className=" text-2xl px-5 pt-5">Contact info</h3>
 
-            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition">
+            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition">
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">
                 <h4 className="text-xs text-50 font-bold md:w-3/12">Email</h4>
                 <p className="text-xs text-50 md:text-sm w-9/12">{data?.success && data.user.email}</p>
               </div>
               <MdArrowForwardIos className="text-lg md:text-2xl" />
             </div>
-            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition">
+            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition">
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">
                 <h4 className="text-xs text-50 font-bold md:w-3/12">Phone</h4>
                 <p className="text-xs text-50 md:text-sm w-9/12">Not set</p>
@@ -93,21 +93,21 @@ const User_detail = () => {
               You can also add addresses to your profile. You can choose if
               others see your profile addresses.
             </p>
-            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition">
+            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition">
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">
                 <h4 className="text-xs text-50 font-bold md:w-3/12">Home</h4>
                 <p className="text-xs text-50 md:text-sm w-9/12">Not set</p>
               </div>
               <MdArrowForwardIos className="text-lg md:text-2xl" />
             </div>
-            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition">
+            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition">
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">
                 <h4 className="text-xs text-50 font-bold md:w-3/12">Work</h4>
                 <p className="text-xs text-50 md:text-sm w-9/12">Not set</p>
               </div>
               <MdArrowForwardIos className="text-lg md:text-2xl" />
             </div>
-            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition">
+            <div className="flex justify-between border-b pb-3 items-center h-20 px-5 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition">
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">
                 <h4 className="text-xs text-50 font-bold md:w-3/12">
                   Other addresses
@@ -123,7 +123,7 @@ const User_detail = () => {
             <h3 className=" text-2xl px-5 pt-5">Password </h3>
 
             <div
-              className="flex justify-between border-b pb-3 items-center h-20 cursor-pointer hover:bg-opacity-30 hover:bg-gray-200 duration-150 transition px-5"
+              className="flex justify-between border-b pb-3 items-center h-20 cursor-pointer hover:bg-opacity-50 hover:bg-gray-200 duration-150 transition px-5"
               onClick={() => nav('/pwd')}
             >
               <div className="w-9/12  flex flex-col justify-between items-start md:flex-row md:items-center">

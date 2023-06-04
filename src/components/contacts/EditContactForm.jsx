@@ -1,4 +1,4 @@
-import { TextInput } from "@mantine/core";
+import { NumberInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React, { useEffect, useState } from "react";
 import {
@@ -13,10 +13,12 @@ import Loading from "./Loading";
 import Cookies from "js-cookie";
 import { notifications } from "@mantine/notifications";
 
-
 const EditContactForm = () => {
-  const token = Cookies.get('token');
-
+  const token = Cookies.get("token");
+  const inputStyles = {
+    WebkitAppearance: "none",
+    MozAppearance: "textfield",
+  };
   const { id } = useParams();
 
   const {
@@ -27,10 +29,10 @@ const EditContactForm = () => {
 
   const oldData = data?.contact;
   console.log(oldData);
-  
+
   const [updateContact] = useUpdateContactMutation();
   const nav = useNavigate();
-  
+
   const form = useForm({
     initialValues: {
       name: oldData?.name ?? "",
@@ -47,7 +49,7 @@ const EditContactForm = () => {
       phone: (value) => (value.length < 1 ? "Phone cannot be empty" : null),
     },
   });
-   useEffect(() => {
+  useEffect(() => {
     if (oldDataSuccess && oldData) {
       form.setValues({
         name: oldData.name,
@@ -58,7 +60,7 @@ const EditContactForm = () => {
     }
   }, [oldDataSuccess, oldData]);
   if (oldDataLoading) {
-    return <Loading/>;
+    return <Loading />;
   }
   if (oldDataSuccess && oldData) {
     return (
@@ -102,7 +104,8 @@ const EditContactForm = () => {
           <div className="flex gap-3 items-center">
             <BsTelephoneFill className="text-xl mr-3" />
             <TextInput
-              className=" w-full"
+              type="number"
+              className=" w-full no-spinners"
               placeholder="Phone"
               withAsterisk
               {...form.getInputProps("phone")}

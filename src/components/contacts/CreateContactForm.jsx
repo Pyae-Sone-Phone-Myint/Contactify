@@ -67,6 +67,7 @@ const CreateContactForm = () => {
         <div className="flex gap-3 items-center">
           <BsTelephoneFill className="text-xl mr-3" />
           <TextInput
+          type="number"
             className=" w-full"
             placeholder="Phone"
             withAsterisk

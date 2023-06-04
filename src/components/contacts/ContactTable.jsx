@@ -18,6 +18,7 @@ import {
   removeFavorite,
   setFavorite,
   setSearchTerm,
+  setVisit,
 } from "../../redux/feature/contactSlice";
 import { Input } from "@material-tailwind/react";
 import { MdOutlineFavorite } from "react-icons/md";
@@ -30,7 +31,7 @@ const ContactTable = () => {
   const [deleteContact] = useDeleteContactMutation();
   const nav = useNavigate();
 
-  const deleteHandler = (contact,id) => {
+  const deleteHandler = (contact, id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -50,8 +51,10 @@ const ContactTable = () => {
       }
     });
   };
+
   const contactsData = useSelector((state) => state.contactSlice.contacts);
   const favorite = useSelector((state) => state.contactSlice.favorite);
+ 
   const searchTerm = useSelector((state) => state.contactSlice.searchTerm);
   console.log(favorite);
   console.log(contactsData);
@@ -99,9 +102,9 @@ const ContactTable = () => {
                     }
                   }}
                   size={"1.5rem"}
-                  className={
+                  className={`cursor-pointer ${
                     contact?.isFavourite ? "text-orange-500" : "text-gray-500"
-                  }
+                  }`}
                 />
                 <Menu width={200} shadow="md">
                   <Menu.Target>
@@ -114,7 +117,10 @@ const ContactTable = () => {
                     <Menu.Item
                       icon={<FaEye />}
                       component="a"
-                      onClick={() => nav(`/contacts/${contact.id}`)}
+                      onClick={() => {
+                        dispatch(setVisit(contact))
+                        nav(`/contacts/${contact.id}`);
+                      }}
                     >
                       View
                     </Menu.Item>
@@ -129,7 +135,7 @@ const ContactTable = () => {
                     <Menu.Item
                       icon={<FaTrash />}
                       component="a"
-                      onClick={() => deleteHandler(contact,contact.id)}
+                      onClick={() => deleteHandler(contact, contact.id)}
                     >
                       Delete
                     </Menu.Item>
@@ -139,6 +145,7 @@ const ContactTable = () => {
             </tr>
           ))
         );
+
       return (
         <div>
           <div className="my-2">

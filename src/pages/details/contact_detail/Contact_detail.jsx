@@ -6,12 +6,18 @@ import {
 } from "../../../redux/api/contactApi";
 import Loading from "../../../components/contacts/Loading";
 import { FaHome, FaTrash } from "react-icons/fa";
-import { MdEmail, MdModeEditOutline } from "react-icons/md";
+import { MdEmail, MdModeEditOutline, MdOutlineFavorite } from "react-icons/md";
 import { BsTelephoneFill, BsThreeDotsVertical } from "react-icons/bs";
 import ContactAvatar from "../../../components/contacts/ContactAvatar";
 import { Menu } from "@mantine/core";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import { notifications } from "@mantine/notifications";
+import {
+  removeFavorite,
+  setFavorite,
+} from "../../../redux/feature/contactSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Contact_detail = () => {
   const token = Cookies.get("token");
@@ -22,8 +28,10 @@ const Contact_detail = () => {
     id,
     token,
   });
+  const contactsData = useSelector((state) => state.contactSlice.contacts);
   const [deleteContact] = useDeleteContactMutation();
-  const deleteHandler = (id) => {
+  const dispatch = useDispatch();
+  const deleteHandler = (contact, id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -36,7 +44,11 @@ const Contact_detail = () => {
       if (result.isConfirmed) {
         const data = await deleteContact({ id, token });
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        nav("/");
+        notifications.show({
+          title: "Contact Notification",
+          message: `${contact?.name} is successfully deleted from the Contact List !`,
+        });
+        nav("/dashboard");
       }
     });
   };
@@ -45,6 +57,11 @@ const Contact_detail = () => {
   }
   if (isSuccess) {
     const contact = data?.contact;
+    const checkItem = contactsData?.find((item) => {
+      if (item.id === contact.id) {
+        return item;
+      }
+    });
     return (
       <div className="my-3">
         <div className="flex md:flex-row flex-col md:gap-3 gap-5  items-center mb-5">
@@ -67,7 +84,20 @@ const Contact_detail = () => {
             <FaHome className="text-xl mr-3" />
             {contact.address}
           </div>
-          <div className="absolute top-[5%] right-[5%]">
+          <div className="absolute flex items-center gap-3 top-[5%] right-[5%]">
+            <MdOutlineFavorite
+              onClick={() => {
+                if (checkItem?.isFavourite) {
+                  dispatch(removeFavorite(contact));
+                } else {
+                  dispatch(setFavorite(contact));
+                }
+              }}
+              size={"1.5rem"}
+              className={`cursor-pointer ${
+                checkItem?.isFavourite ? "text-orange-500" : "text-gray-500"
+              }`}
+            />
             <Menu width={200} shadow="md">
               <Menu.Target>
                 <button className=" p-2 border bg-white shadow-sm">
@@ -86,7 +116,7 @@ const Contact_detail = () => {
                 <Menu.Item
                   icon={<FaTrash />}
                   component="a"
-                  onClick={() => deleteHandler(contact.id)}
+                  onClick={() => deleteHandler(contact, contact.id)}
                 >
                   Delete
                 </Menu.Item>

@@ -14,7 +14,13 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { Input } from "@material-tailwind/react";
 import Loading from "../../contacts/Loading";
-import { addContacts,removeFavorite,setFavorite,setSearchTerm } from "../../../redux/feature/contactSlice";
+import {
+  addContacts,
+  removeFavorite,
+  setFavorite,
+  setSearchTerm,
+  setVisit,
+} from "../../../redux/feature/contactSlice";
 import Cookies from "js-cookie";
 
 const Favourite_contact = () => {
@@ -23,7 +29,7 @@ const Favourite_contact = () => {
   const [deleteContact] = useDeleteContactMutation();
   const nav = useNavigate();
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (contact, id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -36,6 +42,7 @@ const Favourite_contact = () => {
       if (result.isConfirmed) {
         const data = await deleteContact({ id, token });
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        dispatch(removeFavorite(contact));
       }
     });
   };
@@ -88,9 +95,9 @@ const Favourite_contact = () => {
                     }
                   }}
                   size={"1.5rem"}
-                  className={
+                  className={`cursor-pointer ${
                     contact?.isFavourite ? "text-orange-500" : "text-gray-500"
-                  }
+                  }`}
                 />
                 <Menu width={200} shadow="md">
                   <Menu.Target>
@@ -103,7 +110,9 @@ const Favourite_contact = () => {
                     <Menu.Item
                       icon={<FaEye />}
                       component="a"
-                      onClick={() => nav(`/contacts/${contact.id}`)}
+                      onClick={() => {
+                        dispatch(setVisit(contact))
+                        nav(`/contacts/${contact.id}`)}}
                     >
                       View
                     </Menu.Item>
@@ -118,7 +127,7 @@ const Favourite_contact = () => {
                     <Menu.Item
                       icon={<FaTrash />}
                       component="a"
-                      onClick={() => deleteHandler(contact.id)}
+                      onClick={() => deleteHandler(contact, contact.id)}
                     >
                       Delete
                     </Menu.Item>
@@ -163,7 +172,7 @@ const Favourite_contact = () => {
           </Table>
         </div>
       );
-    } else if (contactsData?.length == 0) {
+    } else if (favorite?.length == 0) {
       return (
         <div className=" w-full min-h-[80vh] flex justify-center items-center">
           <div className="">
@@ -177,11 +186,11 @@ const Favourite_contact = () => {
                 Looks like you haven't added any contacts yet.
               </p>
               <button
-                onClick={() => nav("/contacts/create")}
+                onClick={() => nav("/dashboard")}
                 className="  btn-color px-4 py-2 flex items-center gap-2 rounded tracking-wider shadow-sm hover:bg-orange-700 duration-300"
               >
                 {" "}
-                <BsFillPersonPlusFill /> Create Contact
+                <BsFillPersonPlusFill /> Add Contact
               </button>
             </div>
           </div>

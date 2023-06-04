@@ -17,7 +17,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className=" w-fit h-[80vh] lg:h-[85vh] flex flex-col py-5 gap-5 lg:gap-10 fixed ">
+      <div className=" w-fit h-[80vh] lg:h-[85vh] flex flex-col py-5 gap-5 lg:gap-10 fixed md:pr-4 md:shadow-lg  ">
         <div className=" w-full px-0 lg:px-2 flex">
           <div className=" flex items-center gap-3 shadow-xl bg-orange-100 text-xl py-2 px-5 justify-center rounded-full" onClick={() => {
             return nav('/contacts/create')
@@ -54,7 +54,7 @@ const Sidebar = () => {
           >
             <div className="flex gap-5 items-center">
               <MdRecentActors />
-              <button disabled>Recently visit</button>
+              <button >Recently visit</button>
             </div>
           </NavLink>
           <NavLink
