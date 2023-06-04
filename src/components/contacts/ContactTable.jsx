@@ -27,10 +27,13 @@ import { notifications } from "@mantine/notifications";
 
 const ContactTable = () => {
   const token = Cookies.get("token");
-  const { data, isLoading, isError, isSuccess } = useGetAllContactsQuery(token);
+  const { data, isLoading, isError, isSuccess, refetch } = useGetAllContactsQuery(token);
   const [deleteContact] = useDeleteContactMutation();
   const nav = useNavigate();
-
+  useEffect(() => {
+    refetch();
+  }, [page, refetch]);
+  console.log(data);
   const deleteHandler = (contact, id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -54,7 +57,7 @@ const ContactTable = () => {
 
   const contactsData = useSelector((state) => state.contactSlice.contacts);
   const favorite = useSelector((state) => state.contactSlice.favorite);
- 
+
   const searchTerm = useSelector((state) => state.contactSlice.searchTerm);
   console.log(favorite);
   console.log(contactsData);
@@ -118,7 +121,7 @@ const ContactTable = () => {
                       icon={<FaEye />}
                       component="a"
                       onClick={() => {
-                        dispatch(setVisit(contact))
+                        dispatch(setVisit(contact));
                         nav(`/contacts/${contact.id}`);
                       }}
                     >
