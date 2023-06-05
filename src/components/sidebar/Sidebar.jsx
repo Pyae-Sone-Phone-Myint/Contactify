@@ -1,4 +1,3 @@
-import { Badge } from "@mantine/core";
 import React, { useEffect } from "react";
 import { AiOutlinePlus, AiFillHome } from "react-icons/ai";
 import { BsFillPersonFill, BsTrash } from "react-icons/bs";
@@ -53,7 +52,7 @@ const Sidebar = () => {
               <BsFillPersonFill />
               <button>Contacts</button>
             </div>
-            <Badge color="yellow">{contacts_quantity}</Badge>
+            <span className=" text-sm text-yellow-700">{contacts_quantity}</span>
           </NavLink>
           <NavLink
             to={"/recently_search"}
@@ -72,7 +71,7 @@ const Sidebar = () => {
               <MdOutlineFavorite />
               <button>Favourite</button>
             </div>
-            <Badge color="yellow">{favorite?.length}</Badge>
+            <span className=" text-sm text-yellow-700">{favorite?.length}</span>
           </NavLink>
         </div>
         <div className=" w-full">

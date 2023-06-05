@@ -187,7 +187,7 @@ const ContactTable = () => {
               <Input
                 type="search"
                 label="Search here..."
-                className="pr-20"
+                className="pr-20 static z-[-1]"
                 icon={<BiSearchAlt />}
                 onChange={(e) => dispatch(setSearchTerm(e.target.value))}
                 containerProps={{
