@@ -1,13 +1,16 @@
-.parent:hover .child{
-    opacity: 1;
+.parent:hover .child {
+  opacity: 1;
 }
-.child{
-    opacity: 0;
+.child {
+  opacity: 0;
+}
+
+.selected {
+  background-color: #f1f3f5;
 }
 
 @media (max-width: 767px) {
-    .hide-on-mobile {
-      display: none;
-    }
+  .hide-on-mobile {
+    display: none;
   }
-
+}

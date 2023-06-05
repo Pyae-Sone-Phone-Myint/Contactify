@@ -6,8 +6,9 @@ const initialState = {
   searchTerm: "",
   favorite: [],
   recentlyVisit: [],
-  contacts_quantity:0,
-  fetchQueryFinished:false
+  aa: [],
+  contacts_quantity: 0,
+  fetchQueryFinished: false,
 };
 export const contactSlice = createSlice({
   name: "contactSlice",
@@ -53,18 +54,6 @@ export const contactSlice = createSlice({
           }
         });
       }
-      // const alreadyExist = state.favorite.find(
-      //   (item) => item.id === payload.id
-      // );
-
-      // if (alreadyExist) {
-      //   notifications.show({
-      //     title: "Contact Notification",
-      //     message: `${payload?.name} is already exited in the Favourite List !`,
-      //   });
-      //   return state.favorite;
-      // }
-
       state.favorite = [...state.favorite, payload];
       notifications.show({
         title: "Contact Notification",
@@ -100,6 +89,9 @@ export const contactSlice = createSlice({
       // Remove fav icon after remove wherever you want in recently visit page
       const vid = state.contacts.find((item) => item.id === payload.id);
       if (vid) {
+        state.recentlyVisit = state.recentlyVisit?.filter(
+          (item) => item.id !== payload.id
+        );
         state.recentlyVisit?.map((item) => {
           if (item.id === payload.id) {
             item.isFavourite = !item.isFavourite;
@@ -123,7 +115,6 @@ export const contactSlice = createSlice({
       }
       state.recentlyVisit = [...state.recentlyVisit, payload];
     },
-
 
     removeRecentFile: (state, { payload }) => {
       state.recentlyVisit = state.recentlyVisit.filter(
@@ -155,12 +146,16 @@ export const contactSlice = createSlice({
       }
     },
 
-    add_contact_quantity:(state,{payload})=>{
-      state.contacts_quantity=payload
+    removeAllContacts: (state) => {
+      state.recentlyVisit = [];
     },
-    finished_query:(state,{payload})=>{
-      state.fetchQueryFinished=payload
-    }
+
+    add_contact_quantity: (state, { payload }) => {
+      state.contacts_quantity = payload;
+    },
+    finished_query: (state, { payload }) => {
+      state.fetchQueryFinished = payload;
+    },
   },
 });
 
@@ -171,7 +166,8 @@ export const {
   removeFavorite,
   setVisit,
   removeRecentFile,
+  removeAllContacts,
   add_contact_quantity,
-  finished_query
+  finished_query,
 } = contactSlice.actions;
 export default contactSlice.reducer;

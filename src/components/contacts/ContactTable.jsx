@@ -72,7 +72,6 @@ const ContactTable = () => {
     });
   };
   const contactsData = useSelector((state) => state.contactSlice.contacts);
-  const favorite = useSelector((state) => state.contactSlice.favorite);
   const searchTerm = useSelector((state) => state.contactSlice.searchTerm);
 
   const dispatch = useDispatch();
@@ -134,7 +133,10 @@ const ContactTable = () => {
                   />
                   <Menu width={200} shadow="md">
                     <Menu.Target>
-                      <button onClick={(e)=>e.stopPropagation()} className=" p-2 border bg-white shadow-sm">
+                      <button
+                        onClick={(e) => e.stopPropagation()}
+                        className=" p-2 border bg-white shadow-sm"
+                      >
                         <BsThreeDotsVertical />
                       </button>
                     </Menu.Target>
@@ -155,10 +157,9 @@ const ContactTable = () => {
                         icon={<MdModeEditOutline />}
                         component="a"
                         onClick={(e) => {
-                          e.stopPropagation()
+                          e.stopPropagation();
                           nav(`/contacts/edit/${contact.id}`);
-                        }
-                        }
+                        }}
                       >
                         Edit
                       </Menu.Item>
@@ -166,8 +167,9 @@ const ContactTable = () => {
                         icon={<FaTrash />}
                         component="a"
                         onClick={(e) => {
-                          e.stopPropagation()
-                          deleteHandler(contact, contact.id)}}
+                          e.stopPropagation();
+                          deleteHandler(contact, contact.id);
+                        }}
                       >
                         Delete
                       </Menu.Item>
@@ -196,10 +198,10 @@ const ContactTable = () => {
           </div>
           <Table highlightOnHover className="select-none mb-5">
             <colgroup>
-              <col style={{width:"30%"}}/>
-              <col style={{ width:"30%"}} className="hide-on-mobile"/>
-              <col style={{ width:"30%"}} className="hide-on-mobile"/>
-              <col style={{ width:"10%"}}/>
+              <col style={{ width: "30%" }} />
+              <col style={{ width: "30%" }} className="hide-on-mobile" />
+              <col style={{ width: "30%" }} className="hide-on-mobile" />
+              <col style={{ width: "10%" }} />
             </colgroup>
             <thead>
               <tr>
@@ -234,7 +236,6 @@ const ContactTable = () => {
                 onClick={() => nav("/contacts/create")}
                 className="  btn-color px-4 py-2 flex items-center gap-2 rounded tracking-wider shadow-sm hover:bg-orange-700 duration-300"
               >
-                
                 <BsFillPersonPlusFill /> Create Contact
               </button>
             </div>

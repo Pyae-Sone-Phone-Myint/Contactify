@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import Cookies from "js-cookie";
 import { notifications } from "@mantine/notifications";
+import { useDispatch } from "react-redux";
 
 
 const EditContactForm = () => {
@@ -26,10 +27,11 @@ const EditContactForm = () => {
   } = useGetSingleContactQuery({ id, token });
 
   const oldData = data?.contact;
-  console.log(oldData);
+  // console.log(oldData);
   
   const [updateContact] = useUpdateContactMutation();
   const nav = useNavigate();
+  const dispatch = useDispatch()
   
   const form = useForm({
     initialValues: {
@@ -65,13 +67,13 @@ const EditContactForm = () => {
       <div className=" max-w-[500px]">
         <form
           onSubmit={form.onSubmit(async (values) => {
-            console.log(values);
+            // console.log(values);
             const data = await updateContact({
               data: values,
               token,
               id: oldData.id,
             });
-            console.log(data);
+            // console.log(data);
             form.reset();
             nav("/dashboard");
             notifications.show({

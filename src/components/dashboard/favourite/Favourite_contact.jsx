@@ -22,6 +22,7 @@ import {
   setVisit,
 } from "../../../redux/feature/contactSlice";
 import Cookies from "js-cookie";
+import { notifications } from "@mantine/notifications";
 
 const Favourite_contact = () => {
   const token = Cookies.get("token");
@@ -42,14 +43,24 @@ const Favourite_contact = () => {
       if (result.isConfirmed) {
         const data = await deleteContact({ id, token });
         dispatch(removeFavorite(contact));
+        // dispatch(deleteContact(contact));
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        notifications.show({
+          title: "Contact Notification",
+          message: `${contact?.name} is successfully deleted from the Contact List !`,
+        });
       }
     });
   };
   const contactsData = useSelector((state) => state.contactSlice.contacts);
-  const favorite = useSelector((state) => state.contactSlice.favorite);
+  let favorite = useSelector((state) => state.contactSlice.favorite);
   const searchTerm = useSelector((state) => state.contactSlice.searchTerm);
   const dispatch = useDispatch();
+
+  favorite = contactsData?.filter((item) =>
+    favorite?.some((includeItem) => includeItem.id === item.id)
+  );
+
   // useEffect(() => {
   //   dispatch(addContacts(data?.contacts.data));
   // }, [data]);
@@ -85,7 +96,7 @@ const Favourite_contact = () => {
               <td className=" hide-on-mobile ">{contact?.address}</td>
               <td className="">
                 <div className=" child flex items-center gap-3">
-                <MdOutlineFavorite
+                  <MdOutlineFavorite
                     onClick={() => {
                       if (contact?.isFavourite) {
                         dispatch(removeFavorite(contact));
@@ -110,8 +121,9 @@ const Favourite_contact = () => {
                         icon={<FaEye />}
                         component="a"
                         onClick={() => {
-                          dispatch(setVisit(contact))
-                          nav(`/contacts/${contact.id}`)}}
+                          dispatch(setVisit(contact));
+                          nav(`/contacts/${contact.id}`);
+                        }}
                       >
                         View
                       </Menu.Item>
@@ -153,11 +165,11 @@ const Favourite_contact = () => {
             </div>
           </div>
           <Table highlightOnHover className="select-none">
-          <colgroup>
-              <col style={{width: "30%" }} />
-              <col style={{width: "30%" }} className="hide-on-mobile"/>
-              <col style={{width: "30%" }} className="hide-on-mobile"/>
-              <col style={{width: "10%" }} />
+            <colgroup>
+              <col style={{ width: "30%" }} />
+              <col style={{ width: "30%" }} className="hide-on-mobile" />
+              <col style={{ width: "30%" }} className="hide-on-mobile" />
+              <col style={{ width: "10%" }} />
             </colgroup>
             <thead>
               <tr>
