@@ -6,6 +6,15 @@ const initialState = {
     token : null
 }
 
+const CookieUser=Cookies.get('user');
+const CookieToken=Cookies.get('token');
+
+if (CookieToken&& CookieUser) {
+    const user=JSON.parse(CookieUser);
+    initialState.user=user;
+    initialState.token=CookieToken;
+}
+
 export const authSlice = createSlice({
     name : "authSlice",
     initialState,

@@ -43,7 +43,7 @@ const Login = () => {
 							const { data, error } = await login(values);
 							if (data?.success) {
 								dispatch(addUser({ user: data?.user, token: data?.token }));
-								nav("/");
+								nav("/dashboard"); 
 							} else  {
 								setFailed(true);
 								form.reset();

@@ -6,6 +6,8 @@ const initialState = {
   searchTerm: "",
   favorite: [],
   recentlyVisit: [],
+  contacts_quantity:0,
+  fetchQueryFinished:false
 };
 export const contactSlice = createSlice({
   name: "contactSlice",
@@ -122,6 +124,7 @@ export const contactSlice = createSlice({
       state.recentlyVisit = [...state.recentlyVisit, payload];
     },
 
+
     removeRecentFile: (state, { payload }) => {
       state.recentlyVisit = state.recentlyVisit.filter(
         (item) => item.id !== payload.id
@@ -151,6 +154,13 @@ export const contactSlice = createSlice({
         });
       }
     },
+
+    add_contact_quantity:(state,{payload})=>{
+      state.contacts_quantity=payload
+    },
+    finished_query:(state,{payload})=>{
+      state.fetchQueryFinished=payload
+    }
   },
 });
 
@@ -161,5 +171,7 @@ export const {
   removeFavorite,
   setVisit,
   removeRecentFile,
+  add_contact_quantity,
+  finished_query
 } = contactSlice.actions;
 export default contactSlice.reducer;

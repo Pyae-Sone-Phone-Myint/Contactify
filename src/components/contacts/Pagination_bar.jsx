@@ -10,15 +10,15 @@ const Pagination_bar = ({ total_pages, checkParam }) => {
   const queryParams = new URLSearchParams(location.search);
   const getParam = queryParams.get("page");
 
-    if (checkParam && page === 1 && refresh) {
-      setRefresh(false)
-      setPage(Number(getParam));
-      queryParams.set("page", page);
-      nav({
-        pathname: location.pathname,
-        search: queryParams.toString(),
-      });
-    }
+  if (checkParam && page === 1 && refresh) {
+    setRefresh(false);
+    setPage(Number(getParam));
+    queryParams.set("page", page);
+    nav({
+      pathname: location.pathname,
+      search: queryParams.toString(),
+    });
+  }
 
   useEffect(() => {
       if (page!==1 || !refresh) {
@@ -29,9 +29,7 @@ const Pagination_bar = ({ total_pages, checkParam }) => {
         search: queryParams.toString(),
       });
   }, [page]);
-  // console.log(total_pages);
-  // console.log(page);
-  // console.log(checkParam);
+
   return (
     <>
       <Pagination

@@ -61,7 +61,7 @@ const Contact_detail = () => {
           <p className="text-2xl font-semibold text-color ">{contact.name}</p>
         </div>
         <hr />
-        <div className="my-3 rounded-md p-4 border md:max-w-[400px] relative  w-[90%] md:mx-0 mx-auto text-color flex flex-col gap-3">
+        <div className="my-3 shadow-lg rounded-md p-4 border md:max-w-[400px] relative  w-[90%] md:mx-0 mx-auto text-color flex flex-col gap-3">
           <p className=" text-2xl font-semibold">Contact Details</p>
           <div className="flex gap-3 items-center">
             <MdEmail className="text-xl mr-3" />
@@ -76,7 +76,7 @@ const Contact_detail = () => {
             <FaHome className="text-xl mr-3" />
             {contact.address}
           </div>
-          <div className="absolute flex items-center gap-3 top-[5%] right-[5%]">
+          <div className="absolute flex items-center gap-3 top-[10%] right-[5%]">
           <MdOutlineFavorite
               onClick={() => {
                 if (checkItem?.isFavourite) {

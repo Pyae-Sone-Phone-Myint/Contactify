@@ -17,11 +17,10 @@ import Login from "../pages/login/Login";
 import Cookies from "js-cookie";
 import RouteGuard from "./RouteGuard";
 import Favourite_contact from "../components/dashboard/favourite/Favourite_contact";
+import { useSelector } from "react-redux";
 
 const Path = () => {
-    const token = Cookies.get("token");
-    console.log(token);
-
+    const {token}=useSelector(state=>state.authSlice);
   return (
     <>
       <Navbar />
@@ -32,7 +31,7 @@ const Path = () => {
           <Sidebar />
         </div>
         <div
-          className={`w-full lg:w-4/5 py-5 ${token ? "lg:w-4/5" : "lg:w-full"}`}
+          className={`w-full py-5 ${token ? "lg:w-4/5" : "lg:w-full"}`}
         >
           <Routes>
             <Route path="/" element={<Home_page />} />

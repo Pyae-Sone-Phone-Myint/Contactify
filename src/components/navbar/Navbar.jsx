@@ -1,9 +1,9 @@
-import {  Drawer, Menu } from "@mantine/core";
+import { Drawer, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -12,7 +12,8 @@ import { removeUser } from "../../redux/feature/authSlice";
 
 const Navbar = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const token = Cookies.get("token");
+  // const token = Cookies.get("token");
+  const {token,user}=useSelector((state)=>state.authSlice);
   const auth = token ? true : false;
   const nav = useNavigate();
 
@@ -21,15 +22,12 @@ const Navbar = () => {
 
   const logOutHandler = async () => {
     const { data } = await logOut(token);
-    //  console.log(data);
-
     dispatch(removeUser());
-    if (data?.success) nav("/");
+    if (data?.success) {
+      return <Navigate to={'/'}/>;
+    }
   };
-
-  // const user = JSON.parse(Cookies.get('user'))
-
-  // console.log(user);
+  
   return (
     <>
       <div className=" flex py-3 bg-gray-300 lg:px-10 px-5 justify-between items-center sticky top-0">
@@ -51,9 +49,9 @@ const Navbar = () => {
         </div>
 
         {/* After authentication */}
-        <div className={`flex items-center gap-5 ${auth ? "flex" : "hidden"}`}>
-          <h3></h3>
-          <Menu shadow="md" width={100} withArrow position="bottom-end">
+        <div className={`flex items-center gap-5 ${auth ? "block" : "hidden"}`}>
+          <h3 className=" hidden lg:flex">{user?.name}</h3>
+          <Menu shadow="lg" width={100} position="left-end">
             <Menu.Target>
               <button className=" hover:text-gray-800">
                 <FaUserCircle size={"2.5rem"} />
@@ -61,13 +59,13 @@ const Navbar = () => {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item
-                className=" text-center font-semibold"
+                className=" text-center  font-semibold"
                 onClick={() => nav("/user-detail")}
               >
                 Profile
               </Menu.Item>
               <Menu.Item
-                onClick={logOutHandler}
+                onClick={() => logOutHandler()}
                 color="red"
                 className=" text-center font-semibold"
               >
@@ -87,9 +85,9 @@ const Navbar = () => {
           size="60%"
           overlayProps={{ opacity: 0.5, blur: 4 }}
         >
-          <div onClick={close}>
-            <Link to={"/dashboard"} className=" text-3xl">
-              <div className=" md:text-center font-semibold">Contactify</div>
+          <div onClick={close} className=" lg:px-0">
+            <Link to={"/"} className=" text-3xl">
+              <div className="font-semibold">Contactify</div>
             </Link>
             <Sidebar />
           </div>

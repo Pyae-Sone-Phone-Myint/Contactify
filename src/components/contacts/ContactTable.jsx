@@ -15,6 +15,8 @@ import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addContacts,
+  add_contact_quantity,
+  finished_query,
   removeFavorite,
   setFavorite,
   setSearchTerm,
@@ -27,8 +29,7 @@ import { notifications } from "@mantine/notifications";
 import Pagination_bar from "./Pagination_bar";
 
 const ContactTable = () => {
-  const token = Cookies.get("token");
-
+  const { token } = useSelector((state) => state.authSlice);
   //pagination code start here//
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -74,13 +75,12 @@ const ContactTable = () => {
   const favorite = useSelector((state) => state.contactSlice.favorite);
   const searchTerm = useSelector((state) => state.contactSlice.searchTerm);
 
-  // console.log(favorite);
-  console.log(contactsData);
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(add_contact_quantity(data?.contacts?.total));
     dispatch(addContacts(data?.contacts.data));
+    dispatch(finished_query(data?.success));
   }, [data]);
-
   if (isLoading) {
     return <Loading />;
   }
@@ -97,22 +97,30 @@ const ContactTable = () => {
         displayContactsData.length === 0 ? (
           <tr>
             <td className=" text-center" colSpan={4}>
-              No contacts found{" "}
+              No contacts found
             </td>
           </tr>
         ) : (
           displayContactsData.map((contact) => (
-            <tr key={contact.id} className=" parent">
+            <tr
+              key={contact.id}
+              className=" parent cursor-pointer"
+              onClick={() => {
+                dispatch(setVisit(contact));
+                nav(`/contacts/${contact.id}`);
+              }}
+            >
               <td>
                 <p>{contact.name}</p>
                 <span className=" text-gray-600">{contact.email}</span>
               </td>
               <td className="hide-on-mobile">{contact.phone}</td>
               <td className="hide-on-mobile">{contact.address}</td>
-              <td className=" ">
-                <div className="child flex items-center gap-3">
-                <MdOutlineFavorite
-                    onClick={() => {
+              <td className="">
+                <div className="child hidden lg:flex items-center gap-3">
+                  <MdOutlineFavorite
+                    onClick={(e) => {
+                      e.stopPropagation();
                       if (contact.isFavourite) {
                         dispatch(removeFavorite(contact));
                       } else {
@@ -126,7 +134,7 @@ const ContactTable = () => {
                   />
                   <Menu width={200} shadow="md">
                     <Menu.Target>
-                      <button className=" p-2 border bg-white shadow-sm">
+                      <button onClick={(e)=>e.stopPropagation()} className=" p-2 border bg-white shadow-sm">
                         <BsThreeDotsVertical />
                       </button>
                     </Menu.Target>
@@ -135,25 +143,31 @@ const ContactTable = () => {
                       <Menu.Item
                         icon={<FaEye />}
                         component="a"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           dispatch(setVisit(contact));
                           nav(`/contacts/${contact.id}`);
                         }}
                       >
                         View
                       </Menu.Item>
-
                       <Menu.Item
                         icon={<MdModeEditOutline />}
                         component="a"
-                        onClick={() => nav(`/contacts/edit/${contact.id}`)}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          nav(`/contacts/edit/${contact.id}`);
+                        }
+                        }
                       >
                         Edit
                       </Menu.Item>
                       <Menu.Item
                         icon={<FaTrash />}
                         component="a"
-                        onClick={() => deleteHandler(contact, contact.id)}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          deleteHandler(contact, contact.id)}}
                       >
                         Delete
                       </Menu.Item>
@@ -181,18 +195,23 @@ const ContactTable = () => {
             </div>
           </div>
           <Table highlightOnHover className="select-none mb-5">
-          <colgroup><col style={{ width: "30%" }} /> {/* Always show the name column */}<col style={{ width: "30%" }} className="hide-on-mobile" /> {/* Hide on mobile */}<col style={{ width: "30%" }} className="hide-on-mobile" /> {/* Hide on mobile */}<col style={{ width: "10%" }} /> {/* Hide on mobile */}</colgroup>
+            <colgroup>
+              <col style={{width:"30%"}}/>
+              <col style={{ width:"30%"}} className="hide-on-mobile"/>
+              <col style={{ width:"30%"}} className="hide-on-mobile"/>
+              <col style={{ width:"10%"}}/>
+            </colgroup>
             <thead>
               <tr>
                 <th>Name</th>
-                <th className="hide-on-mobile">Phone Number</th> {/* Hide on mobile */}
-                <th className="hide-on-mobile">Address</th> {/* Hide on mobile */}
-                <th className=""></th> {/* Hide on mobile */}
+                <th className="hide-on-mobile">Phone Number</th>
+                <th className="hide-on-mobile">Address</th>
+                <th className=""></th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>
           </Table>
-          <Pagination_bar 
+          <Pagination_bar
             total_pages={data?.contacts?.last_page}
             checkParam={checkParam}
           />
@@ -215,7 +234,7 @@ const ContactTable = () => {
                 onClick={() => nav("/contacts/create")}
                 className="  btn-color px-4 py-2 flex items-center gap-2 rounded tracking-wider shadow-sm hover:bg-orange-700 duration-300"
               >
-                {" "}
+                
                 <BsFillPersonPlusFill /> Create Contact
               </button>
             </div>

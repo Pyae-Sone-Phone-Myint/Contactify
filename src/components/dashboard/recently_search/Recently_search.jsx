@@ -48,7 +48,6 @@ const Recently_search = () => {
   const contactsData = useSelector((state) => state.contactSlice.contacts);
   const favorite = useSelector((state) => state.contactSlice.favorite);
   const visit = useSelector((state) => state.contactSlice.recentlyVisit);
-  console.log(visit);
   const searchTerm = useSelector((state) => state.contactSlice.searchTerm);
   const dispatch = useDispatch();
   // useEffect(() => {
@@ -163,17 +162,17 @@ const Recently_search = () => {
           </div>
           <Table highlightOnHover className="select-none">
           <colgroup>
-              <col style={{ width: "30%" }} /> {/* Always show the name column */}
-              <col style={{ width: "30%" }} className="hide-on-mobile" /> {/* Hide on mobile */}
-              <col style={{ width: "30%" }} className="hide-on-mobile" /> {/* Hide on mobile */}
-              <col style={{ width: "10%" }}  /> {/* Hide on mobile */}
+              <col style={{ width: "30%" }} />
+              <col style={{ width: "30%" }} className="hide-on-mobile" />
+              <col style={{ width: "30%" }} className="hide-on-mobile" />
+              <col style={{ width: "10%" }}  />
             </colgroup>
             <thead>
               <tr>
                 <th>Name</th>
-                <th className="hide-on-mobile">Phone Number</th> {/* Hide on mobile */}
-                <th className="hide-on-mobile">Address</th> {/* Hide on mobile */}
-                <th className=""></th> {/* Hide on mobile */}
+                <th className="hide-on-mobile">Phone Number</th>
+                <th className="hide-on-mobile">Address</th>
+                <th className=""></th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>
