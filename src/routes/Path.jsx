@@ -23,45 +23,50 @@ const Path = () => {
     const {token}=useSelector(state=>state.authSlice);
   return (
     <>
-      <Navbar />
-      <div className=" flex">
-        <div
-          className={`hidden lg:flex lg:w-1/5 ${token ? "flex" : "lg:hidden"}`}
-        >
-          <Sidebar />
+      <div className=" flex flex-col relative">
+        <div className={`z-10 ${token ? "block" : "hidden"}`}>
+          <Navbar />
         </div>
-        <div
-          className={`w-full py-5 ${token ? "lg:w-4/5" : "lg:w-full"}`}
-        >
-          <Routes>
-            <Route path="/" element={<Home_page />} />
-            <Route path="/dashboard" element={<Dashboard/>}/>
-            <Route path="/recently_search" element={<Recently_search />} />
-            <Route path="/favourite" element={<Favourite_contact/>}/>
-            <Route path="/user-detail" element={<User_detail />} />
-            <Route path="/pwd" element={<Password />} />
-            <Route path="/trash" element={<Bin />} />
-            <Route path="/Merge_fix" element={<MergeAndFix />} />
-            <Route path="/contacts/create" element={<CreateContact_page />} />
-            <Route path="/contacts/edit/:id" element={<EditContact_page />} />
-            <Route path="/contacts/:id" element={<Contact_detail />} />
-            <Route
-              path="/register"
-              element={
-                <RouteGuard>
-                  <Register />
-                </RouteGuard>
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <RouteGuard>
-                  <Login />
-                </RouteGuard>
-              }
-            />
-          </Routes>
+        <div className=" flex">
+          <div
+            className={`hidden lg:flex lg:w-1/5 ${
+              token ? "flex" : "lg:hidden"
+            }`}
+          >
+            <Sidebar />
+          </div>
+          <div className={`w-full py-5 ${token ? "lg:w-4/5" : "lg:w-full"}`}>
+            {" "}
+            <Routes>
+              <Route path="/" element={<Home_page />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/recently_search" element={<Recently_search />} />
+              <Route path="/favourite" element={<Favourite_contact />} />
+              <Route path="/user-detail" element={<User_detail />} />
+              <Route path="/pwd" element={<Password />} />
+              <Route path="/trash" element={<Bin />} />
+              <Route path="/Merge_fix" element={<MergeAndFix />} />
+              <Route path="/contacts/create" element={<CreateContact_page />} />
+              <Route path="/contacts/edit/:id" element={<EditContact_page />} />
+              <Route path="/contacts/:id" element={<Contact_detail />} />
+              <Route
+                path="/register"
+                element={
+                  <RouteGuard>
+                    <Register />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <RouteGuard>
+                    <Login />
+                  </RouteGuard>
+                }
+              />
+            </Routes>
+          </div>
         </div>
       </div>
     </>
